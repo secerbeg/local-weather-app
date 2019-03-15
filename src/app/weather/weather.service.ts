@@ -1,16 +1,16 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environment";
-import {CurrentWeather} from "../interfaces/current-weather";
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs'
+import {environment} from '../../environments/environment';
+import {CurrentWeather} from '../interfaces/current-weather';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-interface CurrentWeatherData{
-  weather: [{description: string, icon: string }],
-  main: {temp: number},
-  sys:{ country: string },
-  dt: number,
-  name: string
+interface CurrentWeatherData {
+  weather: [{description: string, icon: string }];
+  main: {temp: number};
+  sys: { country: string };
+  dt: number;
+  name: string;
 }
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class WeatherService {
       .get<CurrentWeatherData>(`${environment.baseUrl}api.openweathermap.org/data/2.5/weather?` +
           `q=${city},${country}&appid=${environment.appid}`
       )
-      .pipe(map(data => this.transformToCurrentWeather(data)))
+      .pipe(map(data => this.transformToCurrentWeather(data)));
   }
 
   private transformToCurrentWeather(data: CurrentWeatherData): CurrentWeather {
@@ -34,10 +34,10 @@ export class WeatherService {
       image: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
       temperature: this.convertKelvinToFahrenheit(data.main.temp),
       description: data.weather[0].description,
-    }
+    };
   }
 
   private convertKelvinToFahrenheit(kelvin: number): number {
-    return kelvin * 9 / 5 - 459.67
+    return kelvin * 9 / 5 - 459.67;
   }
 }
